@@ -63,7 +63,7 @@ final class Collection implements IteratorAggregate
     }
 
     /**
-     * @return \Generator<TKey, TValue>
+     * @return \Traversable<TKey, TValue>
      */
     public function getIterator()
     {
