@@ -9,9 +9,9 @@ use IteratorAggregate;
 
 /**
  * @template TKey
- * @template TValue
+ * @template-covariant TValue
  * @template TKeyIterable
- * @template TValueIterable
+ * @template-covariant TValueIterable
  *
  * @implements IteratorAggregate<TKey, TValue>
  */
