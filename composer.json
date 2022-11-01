@@ -1,0 +1,27 @@
+{
+    "name": "benconda/collection",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "BenConda\\Collection\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "BenCondaTest\\Collection\\": "tests/unit"
+        }
+    },
+    "authors": [
+        {
+            "name": "Benoit Condaminet",
+            "email": "benoit@condami.net"
+        }
+    ],
+    "require": {
+        "php": "^7.4 || ^8.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "phpstan/phpstan": "^1.8"
+    }
+}
