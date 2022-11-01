@@ -9,9 +9,9 @@ use IteratorAggregate;
 
 /**
  * @template TKey
- * @template-covariant TValue
+ * @template TValue
  * @template TKeyIterable
- * @template-covariant TValueIterable
+ * @template TValueIterable
  *
  * @implements IteratorAggregate<TKey, TValue>
  */
@@ -65,7 +65,7 @@ final class Collection implements IteratorAggregate
     /**
      * @return \Traversable<TKey, TValue>
      */
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         yield from ($this->operation)($this->iterable);
     }

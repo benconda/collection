@@ -8,7 +8,7 @@ use Generator;
 
 /**
  * @template TKey
- * @template-covariant TValue
+ * @template TValue
  */
 interface OperationInterface
 {
