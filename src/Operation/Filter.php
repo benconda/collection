@@ -14,7 +14,7 @@ use Generator;
  *
  * @implements OperationInterface<TKey, TValue>
  */
-final class FilterOperation implements OperationInterface
+final class Filter implements OperationInterface
 {
     private Closure $filterCallback;
 
@@ -25,6 +25,7 @@ final class FilterOperation implements OperationInterface
     {
         $this->filterCallback = $filterCallback;
     }
+
 
     /**
      * @param iterable<TKey, TValue> $iterable

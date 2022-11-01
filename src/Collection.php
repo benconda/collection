@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BenConda\Collection;
 
-use BenConda\Collection\Operation\NullOperation;
+use BenConda\Collection\Operation\Iterate;
 use IteratorAggregate;
 
 /**
@@ -36,7 +36,7 @@ final class Collection implements IteratorAggregate
     private function __construct(iterable $iterable, ?OperationInterface $operation = null)
     {
         $this->iterable = $iterable;
-        $this->operation = $operation ?? new NullOperation();
+        $this->operation = $operation ?? new Iterate();
     }
 
     /**

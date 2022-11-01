@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace BenCondaTest\Collection;
 
 use BenConda\Collection\Collection;
-use BenConda\Collection\Operation\FilterOperation;
-use BenConda\Collection\Operation\FlipOperation;
-use BenConda\Collection\Operation\MapOperation;
+use BenConda\Collection\Operation\Filter;
+use BenConda\Collection\Operation\Flip;
+use BenConda\Collection\Operation\Map;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -25,13 +25,13 @@ final class CollectionTest extends TestCase
     }
 
     /**
-     * @covers FilterOperation
+     * @covers Filter
      */
     public function testWithOperation(): void
     {
         $array = range(1, 10);
         $collection = Collection::from($array)
-            ->op(new FilterOperation(fn (int $item) => 0 === $item % 2));
+            ->op(new Filter(fn (int $item) => 0 === $item % 2));
         $arrayResult = iterator_to_array($collection, false);
         $this->assertSame([2, 4, 6, 8, 10], $arrayResult);
     }
@@ -40,32 +40,34 @@ final class CollectionTest extends TestCase
     {
         $array = range(1, 10);
         $collection = Collection::from($array)
-            ->op(new FilterOperation(fn (int $item) => 0 === $item % 2))
-            ->op(new FilterOperation(fn (int $item) => $item > 6));
+            ->op(new Filter(fn (int $item) => 0 === $item % 2))
+            ->op(new Filter(fn (int $item) => $item > 6));
         $arrayResult = iterator_to_array($collection, false);
         $this->assertSame([8, 10], $arrayResult);
     }
 
     /**
-     * @covers FlipOperation
+     * @covers Flip
      */
     public function testFlipOperation(): void
     {
         $array = range(1, 4);
         $collection = Collection::from($array)
-            ->op(new FlipOperation());
+            ->op(new Flip());
         $arrayResult = iterator_to_array($collection);
         $this->assertSame(array_flip($array), $arrayResult);
     }
 
     /**
-     * @covers MapOperation
+     * @covers Map
      */
     public function testMapOperation(): void
     {
         $array = range(1, 4);
         $collection = Collection::from($array)
-            ->op(new MapOperation(fn(int $item): string => "The number is $item"));
+            ->op(new Map(
+                fn(int $item): string => "The number is $item"
+            ));
 
         $arrayResult = iterator_to_array($collection);
         $this->assertSame([

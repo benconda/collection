@@ -13,7 +13,7 @@ use Generator;
  *
  * @implements OperationInterface<TKey, TValue>
  */
-final class NullOperation implements OperationInterface
+final class Iterate implements OperationInterface
 {
 
     /**

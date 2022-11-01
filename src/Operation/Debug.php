@@ -13,7 +13,7 @@ use Generator;
  *
  * @implements OperationInterface<TKey, TValue>
  */
-final class DebugOperation implements OperationInterface
+final class Debug implements OperationInterface
 {
 
     /** @var array<int, array{key: TKey, value: TValue}>  */

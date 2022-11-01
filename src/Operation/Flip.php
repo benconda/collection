@@ -13,7 +13,7 @@ use Generator;
  *
  * @implements OperationInterface<TKey, TValue>
  */
-final class FlipOperation implements OperationInterface
+final class Flip implements OperationInterface
 {
 
     /**

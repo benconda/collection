@@ -15,7 +15,7 @@ use Generator;
  *
  * @implements OperationInterface<TKey, TValue>
  */
-final class MapOperation implements OperationInterface
+final class Map implements OperationInterface
 {
     /** @var Closure(TValueIterable): TValue */
     private Closure $mapCallback;
