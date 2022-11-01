@@ -1,6 +1,8 @@
 {
     "name": "benconda/collection",
     "type": "library",
+    "license": "MIT",
+    "description": "Just another collection library, powered by generators, using static analysis generics and easily extendable",
     "autoload": {
         "psr-4": {
             "BenConda\\Collection\\": "src/"
@@ -23,5 +25,9 @@
     "require-dev": {
         "phpunit/phpunit": "^9.5",
         "phpstan/phpstan": "^1.8"
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "phpstan": "vendor/bin/phpstan"
     }
 }
