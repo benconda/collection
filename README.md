@@ -59,6 +59,10 @@ foreach ($collection as $key => $item)
 
 // And you can translate the whole Collection into an array like this : 
 iterator_to_array($collection);
+
+// Be careful, by design we accept anything as a key, array restrict keys to int|string value so it can fail depending of your Collection TKey.
 ```
 
 # Extend
+
+Coming soon
