@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BenConda\Collection;
+namespace BenConda\Collection\Operation;
 
 use Generator;
 
@@ -22,4 +22,5 @@ interface OperationInterface
      * @return Generator<TKey, TValue>
      */
     public function __invoke(iterable $iterable): Generator;
+
 }

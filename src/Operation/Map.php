@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace BenConda\Collection\Operation;
 
-use BenConda\Collection\OperationInterface;
 use Closure;
 use Generator;
 
@@ -17,15 +16,11 @@ use Generator;
  */
 final class Map implements OperationInterface
 {
-    /** @var Closure(TValueIterable): TValue */
-    private Closure $mapCallback;
-
     /**
      * @param Closure(TValueIterable): TValue $mapCallback
      */
-    public function __construct(Closure $mapCallback)
+    public function __construct(private Closure $mapCallback)
     {
-        $this->mapCallback = $mapCallback;
     }
 
     /**

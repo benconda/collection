@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BenConda\Collection;
 
 use BenConda\Collection\Operation\Iterate;
+use BenConda\Collection\Operation\OperationInterface;
 use IteratorAggregate;
 
 /**
@@ -50,6 +51,14 @@ final class Collection implements IteratorAggregate
     }
 
     /**
+     * @return self<TKeyIterable, TValueIterable, TKeyIterable, TValueIterable>
+     */
+    public static function empty(): self
+    {
+        return new self([]);
+    }
+
+    /**
      * @template TKeyOp
      * @template TValueOp
      *
@@ -57,9 +66,22 @@ final class Collection implements IteratorAggregate
      *
      * @return self<TKeyOp, TValueOp, TKey, TValue>
      */
-    public function op(OperationInterface $operation): self
+    public function apply(OperationInterface $operation): self
     {
         return new self($this, $operation);
+    }
+
+    /**
+     * @template TKeyOp
+     * @template TValueOp
+     *
+     * @param OperationInterface<TKeyOp, TValueOp> $operation
+     *
+     * @return self<TKeyOp, TValueOp, TKey, TValue>
+     */
+    public function __invoke(OperationInterface $operation): self
+    {
+        return $this->apply($operation);
     }
 
     /**
@@ -68,6 +90,17 @@ final class Collection implements IteratorAggregate
     public function getIterator(): \Traversable
     {
         yield from ($this->operation)($this->iterable);
+    }
+
+    /**
+     * @return ?TValue
+     */
+    public function first() {
+        foreach ($this as $item) {
+            return $item;
+        }
+
+        return null;
     }
 
 }

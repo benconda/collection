@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace BenConda\Collection\Operation;
 
-use BenConda\Collection\OperationInterface;
 use Generator;
 
 /**
