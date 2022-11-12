@@ -62,6 +62,40 @@ iterator_to_array($collection);
 
 // Be careful, by design we accept anything as a key, array restrict keys to int|string value so it can fail depending of your Collection TKey.
 ```
+# Operations
+There is some operations shipped with this library
+
+## Join
+This operation allow you to join a Collection with an other Collection, using a match callback. The resulted Collection items are arrays containing the matched items, that you can then Map to create a new Class from it :
+
+```mermaid
+classDiagram
+    class CarBrandCollection {
+        Peugeot
+        Citroen
+    }
+    class WheelCollection {
+        CitroenWheelType1
+        CitroenWheelType2
+        PeugeotWheelGeneric
+    }
+    class Join {
+        [Peugeot, [PeugeotWheelGeneric]]
+        [Citroen, [CitroenWheelType1, CitroenWheelType2]]
+        multiple(true)
+    }
+    CarBrandCollection --|> Join
+    WheelCollection --|> Join
+    class Car {
+        string brandName
+        array Wheels
+    }
+    class Map {
+        Car[] cars
+    }
+    Join --|> Map
+    Car <-- Map
+```
 
 # Extend
 
