@@ -14,10 +14,10 @@ use Generator;
  *
  * @implements OperationInterface<TKey, TValue>
  */
-final class Map implements OperationInterface
+final class Each implements OperationInterface
 {
     /**
-     * @param Closure(TValueIterable): TValue $callback
+     * @param Closure(TValueIterable): void $callback
      */
     public function __construct(private Closure $callback)
     {
@@ -32,7 +32,8 @@ final class Map implements OperationInterface
     public function __invoke(iterable $iterable): Generator
     {
         foreach ($iterable as $key => $value) {
-            yield $key => ($this->callback)($value);
+            ($this->callback)($value);
+            yield $key => $value;
         }
     }
 

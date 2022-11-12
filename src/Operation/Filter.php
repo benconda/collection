@@ -17,9 +17,9 @@ final class Filter implements OperationInterface
 {
 
     /**
-     * @param Closure(TValue $item): bool $filterCallback
+     * @param Closure(TValue $item): bool $callback
      */
-    public function __construct(private Closure $filterCallback) {}
+    public function __construct(private Closure $callback) {}
 
     /**
      * @param iterable<TKey, TValue> $iterable
@@ -29,7 +29,7 @@ final class Filter implements OperationInterface
     public function __invoke(iterable $iterable): Generator
     {
         foreach ($iterable as $key => $item) {
-            if (($this->filterCallback)($item)) {
+            if (($this->callback)($item)) {
                 yield $key => $item;
             }
         }

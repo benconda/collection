@@ -36,7 +36,7 @@ final class Config
     {
         $matchCollection = $this->collection->apply(
             new Filter(
-                filterCallback: fn($withItem) => ($this->on)($item, $withItem)
+                callback: fn($withItem) => ($this->on)($item, $withItem)
             )
         );
 

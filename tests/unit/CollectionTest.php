@@ -37,7 +37,7 @@ final class CollectionTest extends TestCase
         $collection = (Collection::from($array))
         (
             new Filter(
-                filterCallback: fn(int $item) => 0 === $item % 2
+                callback: fn(int $item) => 0 === $item % 2
             )
         );
         $arrayResult = iterator_to_array($collection, false);
@@ -50,12 +50,12 @@ final class CollectionTest extends TestCase
         $collection = (Collection::from($array))
         (
             new Filter(
-                filterCallback: fn(int $item) => 0 === $item % 2
+                callback: fn(int $item) => 0 === $item % 2
             ),
         )
         (
             new Filter(
-                filterCallback: fn(int $item) => $item > 6
+                callback: fn(int $item) => $item > 6
             )
         );
 
@@ -81,10 +81,11 @@ final class CollectionTest extends TestCase
     public function testMapOperation(): void
     {
         $array = range(1, 4);
-        $collection = Collection::from($array)
-            ->apply(new Map(
-                fn(int $item): string => "The number is $item"
-            ));
+        $collection = Collection::from($array)->apply(
+            new Map(
+                callback:  fn(int $item): string => "The number is $item"
+            )
+        );
 
         $arrayResult = iterator_to_array($collection);
         $this->assertSame([
