@@ -20,11 +20,11 @@ use BenConda\Collection\Operation as Op;
 $collection = Collection::from(range(1, 10))
 ->apply(
   new Op\Filter(
-    filterCallback: fn(int $item): bool => $item > 5
+    callback: fn(int $item): bool => $item > 5
   ),
 )->apply(
   new Op\Map(
-    mapCallback: fn(int $item): string => "The number is $item"
+    callback: fn(int $item): string => "The number is $item"
   )
 );
 
