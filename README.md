@@ -32,15 +32,15 @@ $collection = Collection::from(range(1, 10))
 
 // The collection is invokable, so you can add operations like this too : 
 
-$collection = ( Collection::from(range(1, 10)) )
+$collection = Collection::from(range(1, 10))
 (
   new Op\Filter(
-    filterCallback: fn(int $item): bool => $item > 5
+    callback: fn(int $item): bool => $item > 5
   ),
 )
 (
   new Op\Map(
-    mapCallback: fn(int $item): string => "The number is $item"
+    callback: fn(int $item): string => "The number is $item"
   )
 );
 
@@ -66,7 +66,7 @@ iterator_to_array($collection);
 There is some operations shipped with this library
 
 ## Join
-This operation allow you to join a Collection with an other Collection, using a match callback. The resulted Collection items are arrays containing the matched items, that you can then Map to create a new Class from it :
+This operation allow you to join a Collection with another Collection, using a match callback. The resulted Collection items are arrays containing the matched items, that you can then Map to create a new Class from it :
 
 ```mermaid
 classDiagram
