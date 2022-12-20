@@ -27,11 +27,10 @@ $collection = Collection::from(range(1, 10))
     callback: fn(int $item): string => "The number is $item"
   )
 );
-
-// Each time you call apply() it return a new instance of the collection, nothing is override !
-
-// The collection is invokable, so you can add operations like this too : 
-
+```
+Each time you call `apply()` it return a new instance of the collection, nothing is override !
+The collection is invokable, so you can add operations like this too : 
+```PHP
 $collection = Collection::from(range(1, 10))
 (
   new Op\Filter(
@@ -43,25 +42,32 @@ $collection = Collection::from(range(1, 10))
     callback: fn(int $item): string => "The number is $item"
   )
 );
-
-// We can then get only the first value like this
+```
+We can then get only the first value like this :
+```PHP
 $first = $collection->first(); // $first = The number is 5
-// Note that it won't go through the whole array to return the first value, 
-// behind the scene it only do 1 => 2 => 3 => 4 => 5 => The number is 5 and stop
-// This is possible thanks to generators, most other Collection will need to loop through 
-// the whole array to get the filtered version, then Map everything and to finish you get the first value using its offset
+```
+Note that it won't go through the whole array to return the first value, 
+behind the scene it only iterate through 1,2,3,4,5 => `The number is 5` and stop.
 
-// We can iterate on all value using a foreach directly on the collection $object : 
+This is possible thanks to generators, most other Collection will need to loop through 
+the whole array to get the filtered version, then Map everything and you get the first value using its offset.
+
+We can iterate on all value using a foreach directly on the collection $object :
+```PHP
 foreach ($collection as $key => $item)
 {
   // do what you want
 }
-
-// And you can translate the whole Collection into an array like this : 
-iterator_to_array($collection);
-
-// Be careful, by design we accept anything as a key, array restrict keys to int|string value so it can fail depending of your Collection TKey.
 ```
+And you can translate the whole Collection into an array like this : 
+```PHP
+iterator_to_array($collection);
+```
+Be careful, by design we accept anything as a key, array restrict keys to `int|string` type, so it can fail depending on your Collection TKey.
+To overcome this, you can use the `Reindex` operation, this operation will reindex the iterator so the keys will be array compatible.
+Note that in case of assoc array you will lose all the keys.
+
 # Operations
 There is some operations shipped with this library
 
