@@ -63,37 +63,4 @@ final class CollectionTest extends TestCase
         $this->assertSame([8, 10], $arrayResult);
     }
 
-    /**
-     * @covers Flip
-     */
-    public function testFlipOperation(): void
-    {
-        $array = range(1, 4);
-        $collection = Collection::from($array)
-            ->apply(new Flip());
-        $arrayResult = iterator_to_array($collection);
-        $this->assertSame(array_flip($array), $arrayResult);
-    }
-
-    /**
-     * @covers Map
-     */
-    public function testMapOperation(): void
-    {
-        $array = range(1, 4);
-        $collection = Collection::from($array)->apply(
-            new Map(
-                callback:  fn(int $item): string => "The number is $item"
-            )
-        );
-
-        $arrayResult = iterator_to_array($collection);
-        $this->assertSame([
-            'The number is 1',
-            'The number is 2',
-            'The number is 3',
-            'The number is 4',
-        ], $arrayResult);
-    }
-
 }

@@ -61,7 +61,7 @@ final class JoinTest extends TestCase
     }
 
     /**
-     * @covers JoinMultiple::
+     * @covers JoinMultiple
      * @dataProvider provideJoinData
      * @param Collection<int, array<string, string>, int, array<string, string>> $cityCollection
      * @param Collection<int, array<string, string>, int, array<string, string>> $localisationCollection
@@ -74,7 +74,7 @@ final class JoinTest extends TestCase
                 new Join\Config(
                     collection: $personCollection,
                     on: fn(array $localisationItem, array $personItem) => $localisationItem['id'] === $personItem['positionId'],
-                    multiple: true
+                    many: true
                 ),
                 new Join\Config(
                     collection: $cityCollection,
@@ -92,7 +92,7 @@ final class JoinTest extends TestCase
     }
 
     /**
-     * @covers Join::
+     * @covers Join
      * @dataProvider provideJoinData
      * @param Collection<int, array<string, string>, int, array<string, string>> $cityCollection
      * @param Collection<int, array<string, string>, int, array<string, string>> $localisationCollection
@@ -110,5 +110,4 @@ final class JoinTest extends TestCase
             $this->assertSame($localisationItem['cityId'], $cityItem['id']);
         }
     }
-
 }

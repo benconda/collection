@@ -40,7 +40,7 @@ final class Join implements OperationInterface
             new Join\Config(
                 collection: $this->collection,
                 on: $this->on,
-                multiple: $this->multiple
+                many: $this->multiple
             )
         );
 

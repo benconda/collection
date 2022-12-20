@@ -13,7 +13,7 @@ final class EachTest extends TestCase
 {
 
     /**
-     * @covers Each::
+     * @covers Each
      */
     public function testEachOperation(): void
     {

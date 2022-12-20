@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace BenConda\Collection;
 
-use BenConda\Collection\Operation\Iterate;
+use BenConda\Collection\Operation\NullOperation;
 use BenConda\Collection\Operation\OperationInterface;
 use IteratorAggregate;
+use Traversable;
 
 /**
  * @template TKey
@@ -37,7 +38,7 @@ final class Collection implements IteratorAggregate
     private function __construct(iterable $iterable, ?OperationInterface $operation = null)
     {
         $this->iterable = $iterable;
-        $this->operation = $operation ?? new Iterate();
+        $this->operation = $operation ?? new NullOperation();
     }
 
     /**
@@ -85,9 +86,9 @@ final class Collection implements IteratorAggregate
     }
 
     /**
-     * @return \Traversable<TKey, TValue>
+     * @return Traversable<TKey, TValue>
      */
-    public function getIterator(): \Traversable
+    public function getIterator(): Traversable
     {
         yield from ($this->operation)($this->iterable);
     }
@@ -104,4 +105,10 @@ final class Collection implements IteratorAggregate
         return null;
     }
 
+    public function execute(): void
+    {
+        foreach ($this as $item) {
+            // Do nothing
+        }
+    }
 }

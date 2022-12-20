@@ -13,8 +13,8 @@ final class AddTest extends TestCase
 {
 
     /**
-     * @covers Add::
-     * @covers Reindex::
+     * @covers Add
+     * @covers Reindex
      */
     public function testAddOperation(): void
     {

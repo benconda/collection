@@ -23,7 +23,7 @@ final class Config
      * @param Collection<TKey, TValue, TKeyIterable, TValueIterable> $collection
      * @param Closure(TValueFrom, TValue): bool $on
      */
-    public function __construct(private Collection $collection, private Closure $on, private bool $multiple = false)
+    public function __construct(private Collection $collection, private Closure $on, private bool $many = false)
     {
     }
 
@@ -42,7 +42,7 @@ final class Config
 
         $result = [];
         foreach ($matchCollection as $value) {
-            if ($this->multiple) {
+            if ($this->many) {
                 $result[] = $value;
             } else {
                 return $value;
