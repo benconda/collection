@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace BenCondaTest\Collection;
 
 use BenConda\Collection\Collection;
+use BenConda\Collection\Operation\Debug;
 use BenConda\Collection\Operation\Filter;
-use BenConda\Collection\Operation\Flip;
-use BenConda\Collection\Operation\JoinMultiple;
-use BenConda\Collection\Operation\Join;
 use BenConda\Collection\Operation\Map;
 use PHPUnit\Framework\TestCase;
 
@@ -63,4 +61,27 @@ final class CollectionTest extends TestCase
         $this->assertSame([8, 10], $arrayResult);
     }
 
+    public function testOperationGenerators(): void
+    {
+        $debugOperation = new Debug();
+        Collection::from(range(1, 10))
+        (
+            $debugOperation
+        )
+        (
+            new Filter(
+                callback: fn(int $item): bool => $item > 5
+            ),
+        )
+        (
+            new Map(
+                callback: fn(int $item): string => "The number is $item"
+            )
+        )
+        (
+            $debugOperation
+        )
+        ->first();
+        self::assertCount(7, $debugOperation->getDebugLog());
+    }
 }

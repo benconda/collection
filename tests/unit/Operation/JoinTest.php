@@ -9,6 +9,9 @@ use BenConda\Collection\Operation\Join;
 use BenConda\Collection\Operation\JoinMultiple;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @phpstan-type CollectionOfAssocArray Collection<int, array<string, string>, int, array<string, string>>
+ */
 final class JoinTest extends TestCase
 {
 
@@ -63,9 +66,9 @@ final class JoinTest extends TestCase
     /**
      * @covers JoinMultiple
      * @dataProvider provideJoinData
-     * @param Collection<int, array<string, string>, int, array<string, string>> $cityCollection
-     * @param Collection<int, array<string, string>, int, array<string, string>> $localisationCollection
-     * @param Collection<int, array<string, string>, int, array<string, string>> $personCollection
+     * @param CollectionOfAssocArray $cityCollection
+     * @param CollectionOfAssocArray $localisationCollection
+     * @param CollectionOfAssocArray $personCollection
      */
     public function testJoinMultipleOperation(Collection $cityCollection, Collection $localisationCollection, Collection $personCollection): void
     {
@@ -94,8 +97,8 @@ final class JoinTest extends TestCase
     /**
      * @covers Join
      * @dataProvider provideJoinData
-     * @param Collection<int, array<string, string>, int, array<string, string>> $cityCollection
-     * @param Collection<int, array<string, string>, int, array<string, string>> $localisationCollection
+     * @param CollectionOfAssocArray $cityCollection
+     * @param CollectionOfAssocArray $localisationCollection
      */
     public function testJoinOperation(Collection $cityCollection, Collection $localisationCollection): void
     {
