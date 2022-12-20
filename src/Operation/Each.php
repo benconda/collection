@@ -10,14 +10,13 @@ use Generator;
 /**
  * @template TKey
  * @template TValue
- * @template TValueIterable
  *
  * @implements OperationInterface<TKey, TValue>
  */
 final class Each implements OperationInterface
 {
     /**
-     * @param Closure(TValueIterable): void $callback
+     * @param Closure(TValue): void $callback
      */
     public function __construct(private Closure $callback)
     {
@@ -25,7 +24,7 @@ final class Each implements OperationInterface
 
     /**
      *
-     * @param iterable<TKey, TValueIterable> $iterable
+     * @param iterable<TKey, TValue> $iterable
      *
      * @return Generator<TKey, TValue>
      */
@@ -36,6 +35,5 @@ final class Each implements OperationInterface
             yield $key => $value;
         }
     }
-
 
 }

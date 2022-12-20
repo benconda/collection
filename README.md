@@ -94,7 +94,7 @@ classDiagram
         Car[] cars
     }
     Join --|> Map
-    Car <-- Map
+    Car -- Map
 ```
 
 # Extend
