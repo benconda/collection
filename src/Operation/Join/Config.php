@@ -34,7 +34,7 @@ final class Config
      */
     public function __invoke($item)
     {
-        $matchCollection = $this->collection->apply(
+        $matchCollection = ($this->collection)(
             new Filter(
                 callback: fn($withItem) => ($this->on)($item, $withItem)
             )

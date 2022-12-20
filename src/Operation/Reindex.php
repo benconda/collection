@@ -12,20 +12,18 @@ use Generator;
  *
  * @implements OperationInterface<TKey, TValue>
  */
-final class First implements OperationInterface
+final class Reindex implements OperationInterface
 {
-
     /**
+     *
      * @param iterable<TKey, TValue> $iterable
      *
-     * @return Generator<TKey, TValue>
+     * @return Generator<int, TValue>
      */
     public function __invoke(iterable $iterable): Generator
     {
-        foreach ($iterable as $key => $value) {
-            yield $key => $value;
-
-            return;
+        foreach ($iterable as $value) {
+            yield $value;
         }
     }
 }

@@ -95,7 +95,8 @@ final class Collection implements IteratorAggregate
     /**
      * @return ?TValue
      */
-    public function first() {
+    public function first(): mixed 
+    {
         foreach ($this as $item) {
             return $item;
         }
