@@ -35,7 +35,7 @@ The collection is invokable, so you can add operations like this too :
 $collection = Collection::from(range(1, 10))
 (
   new Op\Filter(
-    callback: fn(int $item): bool => $item > 5
+    callback: fn(int $item): bool => $item >= 5
   ),
 )
 (
@@ -131,4 +131,40 @@ $carBrandCollection(
 
 # Extend
 
-Coming soon
+## Add custom operation
+Simply create a class that implement `BenConda\Collection\Operation\OperationInterface`
+
+For example, for the reindex operation : 
+
+```PHP
+use Generator;
+use BenConda\Collection\Operation\OperationInterface;
+
+/**
+ * @template TKey
+ * @template TValue
+ *
+ * @implements OperationInterface<TKey, TValue>
+ */
+final class Reindex implements OperationInterface
+{
+    /**
+     *
+     * @param iterable<TKey, TValue> $iterable
+     *
+     * @return Generator<int, TValue>
+     */
+    public function __invoke(iterable $iterable): Generator
+    {
+        foreach ($iterable as $value) {
+            yield $value;
+        }
+    }
+}
+```
+
+If you need some configuration, simply add a constructor to the class.
+
+## Debug
+
+There is a special Debug operation, you can check [this test](tests/unit/CollectionTest.php#L64) to look how it works.
