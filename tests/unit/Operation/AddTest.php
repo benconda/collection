@@ -11,7 +11,6 @@ use PHPUnit\Framework\TestCase;
 
 final class AddTest extends TestCase
 {
-
     /**
      * @covers Add
      * @covers Reindex

@@ -19,7 +19,6 @@ use Traversable;
  */
 final class Collection implements IteratorAggregate
 {
-
     /**
      *
      * @var iterable<TKeyIterable, TValueIterable>
@@ -96,7 +95,7 @@ final class Collection implements IteratorAggregate
     /**
      * @return ?TValue
      */
-    public function first(): mixed 
+    public function first(): mixed
     {
         foreach ($this as $item) {
             return $item;

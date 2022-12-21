@@ -31,5 +31,4 @@ final class Add implements OperationInterface
         yield from $iterable;
         yield from $this->items;
     }
-
 }

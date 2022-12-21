@@ -35,5 +35,4 @@ final class Each implements OperationInterface
             yield $key => $value;
         }
     }
-
 }

@@ -14,7 +14,6 @@ use Closure;
  */
 final class Config
 {
-
     /**
      * @template TKey
      * @template TKeyIterable
@@ -36,7 +35,7 @@ final class Config
     {
         $matchCollection = ($this->collection)(
             new Filter(
-                callback: fn($withItem) => ($this->on)($item, $withItem)
+                callback: fn ($withItem) => ($this->on)($item, $withItem)
             )
         );
 
@@ -51,5 +50,4 @@ final class Config
 
         return $result;
     }
-
 }

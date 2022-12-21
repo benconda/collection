@@ -10,7 +10,6 @@ use PHPUnit\Framework\TestCase;
 
 final class FlipTest extends TestCase
 {
-
     /**
      * @covers Flip
      */
@@ -22,5 +21,4 @@ final class FlipTest extends TestCase
         $arrayResult = iterator_to_array($collection);
         $this->assertSame(array_flip($array), $arrayResult);
     }
-
 }

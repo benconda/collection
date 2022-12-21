@@ -12,7 +12,6 @@ use Generator;
  */
 interface OperationInterface
 {
-
     /**
      * @template TKeyIterable
      * @template TValueIterable
@@ -22,5 +21,4 @@ interface OperationInterface
      * @return Generator<TKey, TValue>
      */
     public function __invoke(iterable $iterable): Generator;
-
 }

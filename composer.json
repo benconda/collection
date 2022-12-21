@@ -24,10 +24,13 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
-        "phpstan/phpstan": "^1.8"
+        "phpstan/phpstan": "^1.8",
+        "friendsofphp/php-cs-fixer": "^3.13"
     },
     "scripts": {
         "test": "vendor/bin/phpunit",
-        "phpstan": "vendor/bin/phpstan"
+        "phpstan": "vendor/bin/phpstan",
+        "cs-fix": "vendor/bin/php-cs-fixer fix",
+        "check-code-style": "vendor/bin/php-cs-fixer fix --dry-run --diff && vendor/bin/phpstan"
     }
 }

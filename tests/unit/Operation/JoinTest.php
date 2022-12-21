@@ -14,7 +14,6 @@ use PHPUnit\Framework\TestCase;
  */
 final class JoinTest extends TestCase
 {
-
     /**
      * @return array<mixed>
      */
@@ -76,12 +75,12 @@ final class JoinTest extends TestCase
             new JoinMultiple(
                 new Join\Config(
                     collection: $personCollection,
-                    on: fn(array $localisationItem, array $personItem) => $localisationItem['id'] === $personItem['positionId'],
+                    on: fn (array $localisationItem, array $personItem) => $localisationItem['id'] === $personItem['positionId'],
                     many: true
                 ),
                 new Join\Config(
                     collection: $cityCollection,
-                    on: fn(array $localisationItem, array $cityItem) => $localisationItem['cityId'] === $cityItem['id']
+                    on: fn (array $localisationItem, array $cityItem) => $localisationItem['cityId'] === $cityItem['id']
                 )
             )
         );
@@ -105,7 +104,7 @@ final class JoinTest extends TestCase
         $joinLocalisationWithPersons = ($localisationCollection)(
             new Join(
                 collection: $cityCollection,
-                on: fn(array $localisationItem, array $cityItem) => $localisationItem['cityId'] === $cityItem['id']
+                on: fn (array $localisationItem, array $cityItem) => $localisationItem['cityId'] === $cityItem['id']
             )
         );
 

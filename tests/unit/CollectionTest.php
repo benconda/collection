@@ -15,7 +15,6 @@ use PHPUnit\Framework\TestCase;
  */
 final class CollectionTest extends TestCase
 {
-
     public function testGetIterator(): void
     {
         $array = range(1, 10);
@@ -35,7 +34,7 @@ final class CollectionTest extends TestCase
         $collection = (Collection::from($array))
         (
             new Filter(
-                callback: fn(int $item) => 0 === $item % 2
+                callback: fn (int $item) => 0 === $item % 2
             )
         );
         $arrayResult = iterator_to_array($collection, false);
@@ -48,12 +47,12 @@ final class CollectionTest extends TestCase
         $collection = (Collection::from($array))
         (
             new Filter(
-                callback: fn(int $item) => 0 === $item % 2
+                callback: fn (int $item) => 0 === $item % 2
             ),
         )
         (
             new Filter(
-                callback: fn(int $item) => $item > 6
+                callback: fn (int $item) => $item > 6
             )
         );
 
@@ -64,24 +63,32 @@ final class CollectionTest extends TestCase
     public function testOperationGenerators(): void
     {
         $debugOperation = new Debug();
-        Collection::from(range(1, 10))
-        (
+        Collection::from(range(1, 10))(
             $debugOperation
         )
         (
             new Filter(
-                callback: fn(int $item): bool => $item > 5
+                callback: fn (int $item): bool => $item >= 5
             ),
         )
         (
             new Map(
-                callback: fn(int $item): string => "The number is $item"
+                callback: fn (int $item): string => "The number is $item"
             )
         )
         (
             $debugOperation
-        )
-        ->first();
-        self::assertCount(7, $debugOperation->getDebugLog());
+        )->first();
+        $debugLog = $debugOperation->getDebugLog();
+
+        self::assertCount(6, $debugLog);
+        $this->assertSame([
+            ['key' => 0, 'value' => 1],
+            ['key' => 1, 'value' => 2],
+            ['key' => 2, 'value' => 3],
+            ['key' => 3, 'value' => 4],
+            ['key' => 4, 'value' => 5],
+            ['key' => 4, 'value' => 'The number is 5'],
+        ], $debugLog);
     }
 }

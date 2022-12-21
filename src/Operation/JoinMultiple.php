@@ -15,7 +15,6 @@ use Generator;
  */
 final class JoinMultiple implements OperationInterface
 {
-
     /**
      * @var Join\Config<mixed, mixed>[]
      */

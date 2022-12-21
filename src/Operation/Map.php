@@ -35,6 +35,4 @@ final class Map implements OperationInterface
             yield $key => ($this->callback)($value);
         }
     }
-
-
 }

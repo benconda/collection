@@ -14,7 +14,6 @@ use Generator;
  */
 final class NullOperation implements OperationInterface
 {
-
     /**
      * @param iterable<TKey, TValue> $iterable
      *

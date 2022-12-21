@@ -18,7 +18,7 @@ final class MapTest extends TestCase
         $array = range(1, 4);
         $collection = Collection::from($array)->apply(
             new Map(
-                callback: fn(int $item): string => "The number is $item"
+                callback: fn (int $item): string => "The number is $item"
             )
         );
 

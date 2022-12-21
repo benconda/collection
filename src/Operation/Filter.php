@@ -15,11 +15,12 @@ use Generator;
  */
 final class Filter implements OperationInterface
 {
-
     /**
      * @param Closure(TValue $item): bool $callback
      */
-    public function __construct(private Closure $callback) {}
+    public function __construct(private Closure $callback)
+    {
+    }
 
     /**
      * @param iterable<TKey, TValue> $iterable
@@ -34,5 +35,4 @@ final class Filter implements OperationInterface
             }
         }
     }
-
 }

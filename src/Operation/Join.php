@@ -17,7 +17,6 @@ use Generator;
  */
 final class Join implements OperationInterface
 {
-
     /**
      * @template TKeyIterable
      * @template TValueIterable
@@ -46,6 +45,4 @@ final class Join implements OperationInterface
 
         yield from ($op)($iterable);
     }
-
-
 }

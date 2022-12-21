@@ -50,4 +50,4 @@ jobs:
       run: composer run-script test
 
     - name: Run static analysis
-      run: composer run-script phpstan
+      run: composer run-script check-code-style

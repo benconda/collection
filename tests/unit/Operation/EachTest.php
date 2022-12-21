@@ -11,7 +11,6 @@ use PHPUnit\Framework\TestCase;
 
 final class EachTest extends TestCase
 {
-
     /**
      * @covers Each
      */
@@ -19,7 +18,7 @@ final class EachTest extends TestCase
     {
         $collection = Collection::from(range(0, 10))
         (
-            new Map(static fn(int $number) => new FakeObject((string)$number))
+            new Map(static fn (int $number) => new FakeObject((string)$number))
         )
         (
             new Each(function (FakeObject $object) {
@@ -36,8 +35,8 @@ final class EachTest extends TestCase
     }
 }
 
-class FakeObject {
-
+class FakeObject
+{
     public function __construct(private string $attribute)
     {
     }
@@ -56,5 +55,4 @@ class FakeObject {
         $this->attribute = $attribute;
         return $this;
     }
-
 }

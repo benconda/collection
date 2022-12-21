@@ -14,7 +14,6 @@ use Generator;
  */
 final class Flip implements OperationInterface
 {
-
     /**
      *
      * @param iterable<TValue, TKey> $iterable

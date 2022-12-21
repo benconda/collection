@@ -14,7 +14,6 @@ use Generator;
  */
 final class Debug implements OperationInterface
 {
-
     /** @var array<int, array{key: TKey, value: TValue}>  */
     private array $log = [];
 
