@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BenConda\Collection\Operation;
+namespace BenConda\Collection\Modifier;
 
 use Closure;
 use Generator;
@@ -11,9 +11,9 @@ use Generator;
  * @template TKey
  * @template TValue
  *
- * @implements OperationInterface<TKey, TValue>
+ * @implements ModifierInterface<TKey, TValue>
  */
-final class Filter implements OperationInterface
+final class Filter implements ModifierInterface
 {
     /**
      * @param Closure(TValue $item): bool $callback

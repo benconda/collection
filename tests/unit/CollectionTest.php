@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace BenCondaTest\Collection;
 
 use BenConda\Collection\Collection;
-use BenConda\Collection\Operation\Debug;
-use BenConda\Collection\Operation\Filter;
-use BenConda\Collection\Operation\Map;
+use BenConda\Collection\Modifier\Debug;
+use BenConda\Collection\Modifier\Filter;
+use BenConda\Collection\Modifier\Map;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -26,7 +26,7 @@ final class CollectionTest extends TestCase
     /**
      * @covers Filter::
      */
-    public function testWithOperation(): void
+    public function testWithModifier(): void
     {
         /** @var int[] $array */
         $array = range(1, 10);
@@ -41,7 +41,7 @@ final class CollectionTest extends TestCase
         $this->assertSame([2, 4, 6, 8, 10], $arrayResult);
     }
 
-    public function testMultipleOperation(): void
+    public function testMultipleModifier(): void
     {
         $array = range(1, 10);
         $collection = (Collection::from($array))
@@ -60,11 +60,11 @@ final class CollectionTest extends TestCase
         $this->assertSame([8, 10], $arrayResult);
     }
 
-    public function testOperationGenerators(): void
+    public function testModifierGenerators(): void
     {
-        $debugOperation = new Debug();
+        $debugModifier = new Debug();
         Collection::from(range(1, 10))(
-            $debugOperation
+            $debugModifier
         )
         (
             new Filter(
@@ -77,9 +77,9 @@ final class CollectionTest extends TestCase
             )
         )
         (
-            $debugOperation
+            $debugModifier
         )->first();
-        $debugLog = $debugOperation->getDebugLog();
+        $debugLog = $debugModifier->getDebugLog();
 
         self::assertCount(6, $debugLog);
         $this->assertSame([

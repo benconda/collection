@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BenConda\Collection\Operation;
+namespace BenConda\Collection\Modifier;
 
 use Generator;
 
@@ -10,7 +10,7 @@ use Generator;
  * @template TKey
  * @template TValue
  */
-interface OperationInterface
+interface ModifierInterface
 {
     /**
      * @template TKeyIterable

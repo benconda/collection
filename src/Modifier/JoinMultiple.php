@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BenConda\Collection\Operation;
+namespace BenConda\Collection\Modifier;
 
 use Generator;
 
@@ -11,9 +11,9 @@ use Generator;
  * @template TValue
  * @template TValueFrom
  *
- * @implements OperationInterface<TKey, TValue>
+ * @implements ModifierInterface<TKey, TValue>
  */
-final class JoinMultiple implements OperationInterface
+final class JoinMultiple implements ModifierInterface
 {
     /**
      * @var Join\Config<mixed, mixed>[]

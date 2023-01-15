@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BenConda\Collection\Operation;
+namespace BenConda\Collection\Modifier;
 
 use Generator;
 
@@ -10,9 +10,9 @@ use Generator;
  * @template TKey
  * @template TValue
  *
- * @implements OperationInterface<TKey, TValue>
+ * @implements ModifierInterface<TKey, TValue>
  */
-final class Add implements OperationInterface
+final class Add implements ModifierInterface
 {
     /**
      * @param iterable<TKey, TValue> $items

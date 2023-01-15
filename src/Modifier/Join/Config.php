@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace BenConda\Collection\Operation\Join;
+namespace BenConda\Collection\Modifier\Join;
 
 use BenConda\Collection\Collection;
-use BenConda\Collection\Operation\Filter;
+use BenConda\Collection\Modifier\Filter;
 use Closure;
 
 /**

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace BenCondaTest\Collection\Operation;
+namespace BenCondaTest\Collection\Modifier;
 
 use BenConda\Collection\Collection;
-use BenConda\Collection\Operation\Map;
+use BenConda\Collection\Modifier\Map;
 use PHPUnit\Framework\TestCase;
 
 final class MapTest extends TestCase
@@ -13,7 +13,7 @@ final class MapTest extends TestCase
     /**
      * @covers Map
      */
-    public function testMapOperation(): void
+    public function testMapModifier(): void
     {
         $array = range(1, 4);
         $collection = Collection::from($array)->apply(

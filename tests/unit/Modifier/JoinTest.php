@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace BenCondaTest\Collection\Operation;
+namespace BenCondaTest\Collection\Modifier;
 
 use BenConda\Collection\Collection;
-use BenConda\Collection\Operation\Join;
-use BenConda\Collection\Operation\JoinMultiple;
+use BenConda\Collection\Modifier\Join;
+use BenConda\Collection\Modifier\JoinMultiple;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -69,7 +69,7 @@ final class JoinTest extends TestCase
      * @param CollectionOfAssocArray $localisationCollection
      * @param CollectionOfAssocArray $personCollection
      */
-    public function testJoinMultipleOperation(Collection $cityCollection, Collection $localisationCollection, Collection $personCollection): void
+    public function testJoinMultipleModifier(Collection $cityCollection, Collection $localisationCollection, Collection $personCollection): void
     {
         $joinLocalisationWithPersons = ($localisationCollection)(
             new JoinMultiple(
@@ -99,7 +99,7 @@ final class JoinTest extends TestCase
      * @param CollectionOfAssocArray $cityCollection
      * @param CollectionOfAssocArray $localisationCollection
      */
-    public function testJoinOperation(Collection $cityCollection, Collection $localisationCollection): void
+    public function testJoinModifier(Collection $cityCollection, Collection $localisationCollection): void
     {
         $joinLocalisationWithPersons = ($localisationCollection)(
             new Join(

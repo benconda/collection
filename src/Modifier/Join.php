@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BenConda\Collection\Operation;
+namespace BenConda\Collection\Modifier;
 
 use BenConda\Collection\Collection;
 use Closure;
@@ -13,9 +13,9 @@ use Generator;
  * @template TValue
  * @template TValueFrom
  *
- * @implements OperationInterface<TKey, TValue>
+ * @implements ModifierInterface<TKey, TValue>
  */
-final class Join implements OperationInterface
+final class Join implements ModifierInterface
 {
     /**
      * @template TKeyIterable

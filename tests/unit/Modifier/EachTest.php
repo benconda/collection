@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace BenCondaTest\Collection\Operation;
+namespace BenCondaTest\Collection\Modifier;
 
 use BenConda\Collection\Collection;
-use BenConda\Collection\Operation\Each;
-use BenConda\Collection\Operation\Map;
+use BenConda\Collection\Modifier\Each;
+use BenConda\Collection\Modifier\Map;
 use PHPUnit\Framework\TestCase;
 
 final class EachTest extends TestCase
@@ -14,7 +14,7 @@ final class EachTest extends TestCase
     /**
      * @covers Each
      */
-    public function testEachOperation(): void
+    public function testEachModifier(): void
     {
         $collection = Collection::from(range(0, 10))
         (

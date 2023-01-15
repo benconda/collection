@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BenConda\Collection\Operation;
+namespace BenConda\Collection\Modifier;
 
 use Closure;
 use Generator;
@@ -12,9 +12,9 @@ use Generator;
  * @template TValue
  * @template TValueIterable
  *
- * @implements OperationInterface<TKey, TValue>
+ * @implements ModifierInterface<TKey, TValue>
  */
-final class Map implements OperationInterface
+final class Map implements ModifierInterface
 {
     /**
      * @param Closure(TValueIterable): TValue $callback

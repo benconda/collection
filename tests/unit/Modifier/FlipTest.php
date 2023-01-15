@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace BenCondaTest\Collection\Operation;
+namespace BenCondaTest\Collection\Modifier;
 
 use BenConda\Collection\Collection;
-use BenConda\Collection\Operation\Flip;
+use BenConda\Collection\Modifier\Flip;
 use PHPUnit\Framework\TestCase;
 
 final class FlipTest extends TestCase
@@ -13,7 +13,7 @@ final class FlipTest extends TestCase
     /**
      * @covers Flip
      */
-    public function testFlipOperation(): void
+    public function testFlipModifier(): void
     {
         $array = range(1, 4);
         $collection = Collection::from($array)

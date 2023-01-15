@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace BenConda\Collection;
 
-use BenConda\Collection\Operation\NullOperation;
-use BenConda\Collection\Operation\OperationInterface;
+use BenConda\Collection\Modifier\NullModifier;
+use BenConda\Collection\Modifier\ModifierInterface;
 use IteratorAggregate;
 use Traversable;
 
@@ -17,7 +17,7 @@ use Traversable;
  *
  * @implements IteratorAggregate<TKey, TValue>
  */
-final class Collection implements IteratorAggregate
+class Collection implements IteratorAggregate
 {
     /**
      *
@@ -26,18 +26,18 @@ final class Collection implements IteratorAggregate
     private iterable $iterable;
 
     /**
-     * @var OperationInterface<TKey, TValue>
+     * @var ModifierInterface<TKey, TValue>
      */
-    private OperationInterface $operation;
+    private ModifierInterface $modifier;
 
     /**
      * @param iterable<TKeyIterable, TValueIterable> $iterable
-     * @param ?OperationInterface<TKey, TValue> $operation
+     * @param ?ModifierInterface<TKey, TValue> $modifier
      */
-    private function __construct(iterable $iterable, ?OperationInterface $operation = null)
+    private function __construct(iterable $iterable, ?ModifierInterface $modifier = null)
     {
         $this->iterable = $iterable;
-        $this->operation = $operation ?? new NullOperation();
+        $this->modifier = $modifier ?? new NullModifier();
     }
 
     /**
@@ -62,24 +62,24 @@ final class Collection implements IteratorAggregate
      * @template TKeyOp
      * @template TValueOp
      *
-     * @param OperationInterface<TKeyOp, TValueOp> $operation
+     * @param ModifierInterface<TKeyOp, TValueOp> $modifier
      *
      * @return self<TKeyOp, TValueOp, TKey, TValue>
      */
-    public function apply(OperationInterface $operation): self
+    public function apply(ModifierInterface $modifier): self
     {
-        return new self($this, $operation);
+        return new self($this, $modifier);
     }
 
     /**
      * @template TKeyOp
      * @template TValueOp
      *
-     * @param OperationInterface<TKeyOp, TValueOp> $operation
+     * @param ModifierInterface<TKeyOp, TValueOp> $operation
      *
      * @return self<TKeyOp, TValueOp, TKey, TValue>
      */
-    public function __invoke(OperationInterface $operation): self
+    public function __invoke(ModifierInterface $operation): self
     {
         return $this->apply($operation);
     }
@@ -89,7 +89,7 @@ final class Collection implements IteratorAggregate
      */
     public function getIterator(): Traversable
     {
-        yield from ($this->operation)($this->iterable);
+        yield from ($this->modifier)($this->iterable);
     }
 
     /**
