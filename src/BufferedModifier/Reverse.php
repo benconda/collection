@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace BenConda\Collection\BufferModifier;
+namespace BenConda\Collection\BufferedModifier;
 
 use BenConda\Collection\MemoryBuffer;
 use BenConda\Collection\Modifier\ModifierInterface;

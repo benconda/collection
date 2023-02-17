@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace BenCondaTest\Collection\BufferModifier;
+namespace BenCondaTest\Collection\BufferedModifier;
 
-use BenConda\Collection\BufferModifier\Reverse;
+use BenConda\Collection\BufferedModifier\Reverse;
 use BenConda\Collection\Collection;
 use PHPUnit\Framework\TestCase;
 
