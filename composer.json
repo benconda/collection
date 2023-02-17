@@ -31,6 +31,6 @@
         "test": "vendor/bin/phpunit",
         "phpstan": "vendor/bin/phpstan",
         "cs-fix": "vendor/bin/php-cs-fixer fix",
-        "check-code-style": "vendor/bin/php-cs-fixer fix --dry-run --diff && vendor/bin/phpstan"
+        "check-code-style": "PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer fix --dry-run --diff && vendor/bin/phpstan"
     }
 }
