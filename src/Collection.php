@@ -4,110 +4,175 @@ declare(strict_types=1);
 
 namespace BenConda\Collection;
 
-use BenConda\Collection\Modifier\NullModifier;
+use BenConda\Collection\BufferedModifier\Reverse;
+use BenConda\Collection\Modifier\Add;
+use BenConda\Collection\Modifier\Aggregate;
+use BenConda\Collection\Modifier\Each;
+use BenConda\Collection\Modifier\Filter;
+use BenConda\Collection\Modifier\Flip;
+use BenConda\Collection\Modifier\Map;
+use BenConda\Collection\Modifier\MapWith;
 use BenConda\Collection\Modifier\ModifierInterface;
-use IteratorAggregate;
-use Traversable;
+use BenConda\Collection\Modifier\NullModifier;
+use BenConda\Collection\Modifier\Reindex;
+use Closure;
 
 /**
  * @template TKey
  * @template TValue
- * @template TKeyIterable
- * @template TValueIterable
  *
- * @implements IteratorAggregate<TKey, TValue>
+ * @extends CoreCollection<TKey, TValue>
  */
-class Collection implements IteratorAggregate
+final class Collection extends CoreCollection
 {
     /**
+     * @template TIterableKey
+     * @template TIterableValue
      *
-     * @var iterable<TKeyIterable, TValueIterable>
+     * @param iterable<TIterableKey, TIterableValue> $iterable
+     * @param ModifierInterface<TKey, TValue> $modifier
      */
-    private iterable $iterable;
-
-    /**
-     * @var ModifierInterface<TKey, TValue>
-     */
-    private ModifierInterface $modifier;
-
-    /**
-     * @param iterable<TKeyIterable, TValueIterable> $iterable
-     * @param ?ModifierInterface<TKey, TValue> $modifier
-     */
-    private function __construct(iterable $iterable, ?ModifierInterface $modifier = null)
+    private function __construct(iterable $iterable, ModifierInterface $modifier)
     {
-        $this->iterable = $iterable;
-        $this->modifier = $modifier ?? new NullModifier();
+        parent::__construct($iterable, $modifier);
     }
 
     /**
+     * @template TFromKey
+     * @template TFromValue
      *
-     * @param iterable<TKeyIterable, TValueIterable> $iterable
-     * @return self<TKeyIterable, TValueIterable, TKeyIterable, TValueIterable>
+     * @param iterable<TFromKey, TFromValue> $iterable
+     *
+     * @return self<TFromKey, TFromValue>
      */
     public static function from(iterable $iterable): self
     {
-        return new self($iterable);
+        /** @var NullModifier<TFromKey, TFromValue> $modifier */
+        $modifier = new NullModifier();
+
+        return new self($iterable, $modifier);
     }
 
     /**
-     * @return self<TKeyIterable, TValueIterable, TKeyIterable, TValueIterable>
+     *
+     * @return self<mixed, mixed>
      */
     public static function empty(): self
     {
-        return new self([]);
+        return new self([], new NullModifier());
     }
 
     /**
-     * @template TKeyOp
-     * @template TValueOp
+     * @template TKeyModifier
+     * @template TValueModifier
      *
-     * @param ModifierInterface<TKeyOp, TValueOp> $modifier
+     * @param ModifierInterface<TKeyModifier, TValueModifier> $modifier
      *
-     * @return self<TKeyOp, TValueOp, TKey, TValue>
+     * @return self<TKeyModifier, TValueModifier>
      */
-    public function apply(ModifierInterface $modifier): self
+    public function __invoke(ModifierInterface $modifier): self
     {
         return new self($this, $modifier);
     }
 
     /**
-     * @template TKeyOp
-     * @template TValueOp
-     *
-     * @param ModifierInterface<TKeyOp, TValueOp> $operation
-     *
-     * @return self<TKeyOp, TValueOp, TKey, TValue>
+     * @param iterable<TKey, TValue> $items
      */
-    public function __invoke(ModifierInterface $operation): self
+    public function add(iterable $items): static
     {
-        return $this->apply($operation);
+        return ($this)(new Add(items: $items));
     }
 
     /**
-     * @return Traversable<TKey, TValue>
+     * @param Closure(TValue $item): bool $callback
      */
-    public function getIterator(): Traversable
+    public function filter(Closure $callback, bool $multiple = true): static
     {
-        yield from ($this->modifier)($this->iterable);
+        return ($this)(new Filter(callback: $callback, multiple: $multiple));
     }
 
     /**
-     * @return ?TValue
+     * @template TModifierValue
+     * @param Closure(TValue, TKey): TModifierValue $on
+     *
+     * @return self<TKey, TModifierValue>
      */
-    public function first(): mixed
+    public function map(Closure $on): self
     {
-        foreach ($this as $item) {
-            return $item;
-        }
-
-        return null;
+        return ($this)(new Map(on: $on));
     }
 
-    public function execute(): void
+    /**
+     * @return self<int, TValue>
+     */
+    public function reindex(): self
     {
-        foreach ($this as $item) {
-            // Do nothing
-        }
+        /** @var Reindex<TKey, TValue> $modifier */
+        $modifier = new Reindex();
+
+        return ($this)($modifier);
+    }
+
+    /**
+     * @template TJoinValue
+     * @template TJoinKey
+     * @template TReturnValue
+     *
+     * @param CoreCollection<TJoinKey, TJoinValue> $collection
+     * @param Closure(TValue, TJoinValue): bool $on
+     * @param ?Closure(TValue, ($many is true ? list<TJoinValue> : TJoinValue)):TReturnValue $map
+     *
+     * @return self<TKey, ($map is null ? ($many is true ? list<TJoinValue> : TJoinValue) : list<TJoinValue>|TJoinValue|TReturnValue)>
+     */
+    public function mapWith(CoreCollection $collection, Closure $on, Closure $map = null, bool $many = false): self
+    {
+        return ($this)(new MapWith(
+            collection: $collection,
+            on: $on,
+            map: $map,
+            many: $many
+        ));
+    }
+
+    /**
+     * @return self<TValue, TKey>
+     */
+    public function flip(): self
+    {
+        /** @var Flip<TKey, TValue> $modifier */
+        $modifier = new Flip();
+
+        return ($this)($modifier);
+    }
+
+    /**
+     * @param Closure(TValue): void $callback
+     *
+     * @return self<TKey, TValue>
+     */
+    public function each(Closure $callback): self
+    {
+        return ($this)(new Each(callback: $callback));
+    }
+
+    /**
+     * @param ModifierInterface<mixed, mixed> ...$modifiers
+     *
+     * @return self<TKey, list<mixed>>
+     */
+    public function aggregate(ModifierInterface ...$modifiers): self
+    {
+        return ($this)(new Aggregate(...$modifiers));
+    }
+
+    /**
+     * @return self<TKey, TValue>
+     */
+    public function reverse(): self
+    {
+        /** @var Reverse<TKey, TValue> $modifier */
+        $modifier = new Reverse();
+
+        return ($this)($modifier);
     }
 }

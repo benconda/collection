@@ -4,58 +4,84 @@ declare(strict_types=1);
 
 namespace BenConda\Collection;
 
-use BenConda\Collection\Modifier\ModifierInterface;
+use IteratorAggregate;
+use Traversable;
 
 /**
  * @template TKey
  * @template TValue
+ *
+ * @implements IteratorAggregate<TKey, TValue>
  */
-final class MemoryBuffer
+final class MemoryBuffer implements IteratorAggregate
 {
-    /** @var list<array{key: TKey, value: TValue}>  */
+    /** @var list<array{key: TKey, value: TValue}> */
     private array $buffer = [];
     private int $position = 0;
-    /** @var \Iterator<TKey, TValue> */
-    private \Iterator $generator;
 
     /**
-     * @param iterable<TKey, TValue> $iterable
+     * @param TKey $key
+     * @param TValue $value
      */
-    public function __construct(
-        iterable $iterable
-    ) {
-        $this->generator = $this->iterableToGenerator($iterable);
+    public function buffer(mixed $key, mixed $value): void
+    {
+        $this->buffer[$this->position++] = ['key' => $key, 'value' => $value];
     }
 
     /**
-     * @param iterable<TKey, TValue> $iterable
+     * @return Traversable<TKey, TValue>
+     */
+    public function consume(): Traversable
+    {
+        while (null !== $buffer = array_shift($this->buffer)) {
+            yield $buffer['key'] => $buffer['value'];
+        }
+    }
+
+    public function getIterator(): Traversable
+    {
+        foreach ($this->buffer as $buffer) {
+            yield $buffer['key'] => $buffer['value'];
+        }
+    }
+
+    /**
+     * @return Traversable<TKey, TValue>
+     */
+    public function reverseConsume(): Traversable
+    {
+        while (null !== $buffer = array_pop($this->buffer)) {
+            yield $buffer['key'] => $buffer['value'];
+        }
+    }
+
+    public function clearBuffer(): void
+    {
+        $this->buffer = [];
+        $this->position = 0;
+    }
+
+    /**
+     * @template TKeyNew
+     * @template TValueNew
      *
-     * @return \Iterator<TKey, TValue>
+     * @param iterable<TKeyNew, TValueNew> $iterable
+     *
+     * @return self<TKeyNew, TValueNew>
      */
-    private function iterableToGenerator(iterable $iterable): \Iterator
+    public static function bufferAll(iterable $iterable): self
     {
-        yield from $iterable;
-    }
-
-    /**
-     * @return list<array{key: TKey, value: TValue}>
-     */
-    public function getBuffer(int $untilPosition = null): array
-    {
-        while ((null === $untilPosition || $this->position < $untilPosition) && $this->generator->valid()) {
-            $this->buffer[$this->position++] = ['key' => $this->generator->key(), 'value' => $this->generator->current()];
-            $this->generator->next();
+        /** @var self<TKeyNew, TValueNew> $self */
+        $self = new self();
+        foreach ($iterable as $key => $value) {
+            $self->buffer($key, $value);
         }
 
-        return $this->buffer;
+        return $self;
     }
 
-    /**
-     * @param iterable<TKey, TValue> $iterable
-     * @return list<array{key: TKey, value: TValue}>
-     */
-    public static function bufferAll(iterable $iterable): array
+    public function isEmpty(): bool
     {
-        return (new self($iterable))->getBuffer();
+        return 0 === $this->position;
     }
 }
