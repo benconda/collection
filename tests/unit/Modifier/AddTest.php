@@ -9,22 +9,18 @@ use BenConda\Collection\Modifier\Add;
 use BenConda\Collection\Modifier\Reindex;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @covers Add
+ * @covers Reindex
+ */
 final class AddTest extends TestCase
 {
-    /**
-     * @covers Add
-     * @covers Reindex
-     */
     public function testAddModifier(): void
     {
         $collection = Collection::from(range(0, 3))
-        (
-            new Add(range(4, 6))
-        )
-        (
-            new Reindex()
-        );
+            ->add(range(4, 6))
+            ->reindex();
 
-        self::assertSame(range(0, 6), iterator_to_array($collection));
+        self::assertSame(range(0, 6), $collection->toArray());
     }
 }

@@ -14,7 +14,7 @@ use Generator;
  */
 final class Debug implements ModifierInterface
 {
-    /** @var array<int, array{key: TKey, value: TValue}>  */
+    /** @var array<int, array{key: TKey, value: TValue}> */
     private array $log = [];
 
     /**

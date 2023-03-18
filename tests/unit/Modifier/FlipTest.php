@@ -17,8 +17,7 @@ final class FlipTest extends TestCase
     {
         $array = range(1, 4);
         $collection = Collection::from($array)
-            ->apply(new Flip());
-        $arrayResult = iterator_to_array($collection);
-        $this->assertSame(array_flip($array), $arrayResult);
+            ->flip();
+        $this->assertSame(array_flip($array), $collection->toArray());
     }
 }

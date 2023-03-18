@@ -17,14 +17,13 @@ use Generator;
 final class Map implements ModifierInterface
 {
     /**
-     * @param Closure(TValueIterable): TValue $callback
+     * @param Closure(TValueIterable, TKey): TValue $on
      */
-    public function __construct(private Closure $callback)
+    public function __construct(private Closure $on)
     {
     }
 
     /**
-     *
      * @param iterable<TKey, TValueIterable> $iterable
      *
      * @return Generator<TKey, TValue>
@@ -32,7 +31,7 @@ final class Map implements ModifierInterface
     public function __invoke(iterable $iterable): Generator
     {
         foreach ($iterable as $key => $value) {
-            yield $key => ($this->callback)($value);
+            yield $key => ($this->on)($value, $key);
         }
     }
 }

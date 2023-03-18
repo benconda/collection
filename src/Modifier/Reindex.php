@@ -10,7 +10,7 @@ use Generator;
  * @template TKey
  * @template TValue
  *
- * @implements ModifierInterface<TKey, TValue>
+ * @implements ModifierInterface<int, TValue>
  */
 final class Reindex implements ModifierInterface
 {

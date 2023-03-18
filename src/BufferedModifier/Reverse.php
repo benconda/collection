@@ -25,8 +25,6 @@ final class Reverse implements ModifierInterface
     {
         $buffer = MemoryBuffer::bufferAll($iterable);
 
-        while (null !== $element = array_pop($buffer)) {
-            yield $element['key'] => $element['value'];
-        }
+        yield from $buffer->reverseConsume();
     }
 }

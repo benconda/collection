@@ -73,7 +73,7 @@ final class CollectionTest extends TestCase
         )
         (
             new Map(
-                callback: fn (int $item): string => "The number is $item"
+                on: fn (int $item): string => "The number is $item"
             )
         )
         (
