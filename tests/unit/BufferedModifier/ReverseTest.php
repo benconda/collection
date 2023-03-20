@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace BenCondaTest\Collection\BufferedModifier;
 
-use BenConda\Collection\BufferedModifier\Reverse;
 use BenConda\Collection\Collection;
 use PHPUnit\Framework\TestCase;
 
 final class ReverseTest extends TestCase
 {
     /**
-     * @covers Reverse
+     * @covers \Reverse
      */
     public function testReverse(): void
     {

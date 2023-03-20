@@ -11,7 +11,7 @@ use BenConda\Collection\Modifier\Map;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Collection
+ * @covers \Collection
  */
 final class CollectionTest extends TestCase
 {
@@ -24,7 +24,7 @@ final class CollectionTest extends TestCase
     }
 
     /**
-     * @covers Filter::
+     * @covers \Filter::
      */
     public function testWithModifier(): void
     {

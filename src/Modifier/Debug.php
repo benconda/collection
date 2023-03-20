@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace BenConda\Collection\Modifier;
 
-use Generator;
-
 /**
  * @template TKey
  * @template TValue
@@ -20,9 +18,9 @@ final class Debug implements ModifierInterface
     /**
      * @param iterable<TKey, TValue> $iterable
      *
-     * @return Generator<TKey, TValue>
+     * @return \Generator<TKey, TValue>
      */
-    public function __invoke(iterable $iterable): Generator
+    public function __invoke(iterable $iterable): \Generator
     {
         foreach ($iterable as $key => $value) {
             $this->log[] = ['key' => $key, 'value' => $value];

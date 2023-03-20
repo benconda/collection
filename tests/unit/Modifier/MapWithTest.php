@@ -12,11 +12,11 @@ use PHPUnit\Framework\TestCase;
  */
 final class MapWithTest extends TestCase
 {
-    /** @var Collection<int, Item>  */
+    /** @var Collection<int, Item> */
     private Collection $itemCollection;
-    /** @var Collection<int, Person>  */
+    /** @var Collection<int, Person> */
     private Collection $personCollection;
-    /** @var Collection<int, Cart>  */
+    /** @var Collection<int, Cart> */
     private Collection $cartCollection;
 
     protected function setUp(): void
@@ -46,7 +46,7 @@ final class MapWithTest extends TestCase
                 $this->cartCollection,
                 on: fn (Person $person, Cart $cart): bool => $person->id === $cart->personId,
                 map: fn (Person $person, array $cart): PersonWithCartItems => new PersonWithCartItems($person, Collection::from($cart)
-                    ->mapWith($this->itemCollection, on: fn (Cart $cart, Item $item): bool => $cart->itemId === $item->id)->toArrayList()),
+                    ->mapWith($this->itemCollection, on: fn (Cart $cart, Item $item): bool => $cart->itemId === $item->id)->toList()),
                 many: true
             );
 

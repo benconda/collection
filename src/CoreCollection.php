@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace BenConda\Collection;
 
 use BenConda\Collection\Modifier\ModifierInterface;
-use BenConda\Collection\Modifier\NullModifier;
-use Generator;
 use IteratorAggregate;
 
 /**
@@ -15,34 +13,34 @@ use IteratorAggregate;
  *
  * @implements IteratorAggregate<TKey, TValue>
  */
-class CoreCollection implements IteratorAggregate
+class CoreCollection implements \IteratorAggregate
 {
     /**
-     * @var ModifierInterface<TKey, TValue>
+     * @var ?ModifierInterface<TKey, TValue>
      */
-    private readonly ModifierInterface $modifier;
+    private readonly ?ModifierInterface $modifier;
 
     /**
-     * @param iterable<mixed, mixed> $iterable
+     * @param iterable<mixed, mixed>          $iterable
      * @param ModifierInterface<TKey, TValue> $modifier
      */
     public function __construct(
         private readonly iterable $iterable,
         ModifierInterface $modifier = null
     ) {
-        if (null === $modifier) {
-            /** @var NullModifier<TKey, TValue> $modifier */
-            $modifier = new NullModifier();
-        }
-
         $this->modifier = $modifier;
     }
 
     /**
-     * @return Generator<TKey, TValue>
+     * @return \Generator<TKey, TValue>
      */
-    public function getIterator(): Generator
+    public function getIterator(): \Generator
     {
+        if (null === $this->modifier) {
+            yield from $this->iterable;
+
+            return;
+        }
         yield from ($this->modifier)($this->iterable);
     }
 
@@ -85,7 +83,7 @@ class CoreCollection implements IteratorAggregate
     /**
      * @return list<TValue>
      */
-    public function toArrayList(): array
+    public function toList(): array
     {
         $newArray = [];
         foreach ($this as $item) {
@@ -96,9 +94,9 @@ class CoreCollection implements IteratorAggregate
     }
 
     /**
-     * @return ModifierInterface<TKey, TValue>
+     * @return ?ModifierInterface<TKey, TValue>
      */
-    public function getModifier(): ModifierInterface
+    public function getModifier(): ?ModifierInterface
     {
         return $this->modifier;
     }

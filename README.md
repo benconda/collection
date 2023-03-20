@@ -1,6 +1,6 @@
 # Collection
 Collection library, powered by generators, with generics, easily extendable and immutable. 
-**Lazy** by design and memory friendly. This accept anything that is iterable (Generator, array, Iterator, ...)
+**Lazy** by design and memory friendly. Accept anything as iterable 🔥 (Generator, array, Iterator, ...)
 
 # Requirement
 To use this library you need at least php 8.1
@@ -117,4 +117,9 @@ If you need some configuration, simply add a constructor to the class.
 ## Using your own collection class
 Sometimes you need to create your own, strict typed Collection class.
 
-To do so, you can extend the CoreCollection class, and implement only the needed modifier method (or use the invoke style)
+To do so, you can extend the CoreCollection class, and implement only the needed modifier method.
+
+Sometimes you may need to have mutable custom Collection, for this use case you can extend MutableCoreCollection. 
+You will find an example in [this test](tests/unit/CustomCollectionTest.php)
+
+Note that even with mutable Collection, you still rely on Generators behind so each time you modify your collection, nothing is really done until you loop through it.
