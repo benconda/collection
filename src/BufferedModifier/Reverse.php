@@ -6,7 +6,6 @@ namespace BenConda\Collection\BufferedModifier;
 
 use BenConda\Collection\MemoryBuffer;
 use BenConda\Collection\Modifier\ModifierInterface;
-use Generator;
 
 /**
  * @template TKey
@@ -19,9 +18,9 @@ final class Reverse implements ModifierInterface
     /**
      * @param iterable<TKey, TValue> $iterable
      *
-     * @return Generator<TKey, TValue>
+     * @return \Generator<TKey, TValue>
      */
-    public function __invoke(iterable $iterable): Generator
+    public function __invoke(iterable $iterable): \Generator
     {
         $buffer = MemoryBuffer::bufferAll($iterable);
 

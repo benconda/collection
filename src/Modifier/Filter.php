@@ -6,7 +6,6 @@ namespace BenConda\Collection\Modifier;
 
 use BenConda\Collection\MemoryBuffer;
 use Closure;
-use Generator;
 
 /**
  * @template TKey
@@ -25,8 +24,7 @@ final class Filter implements ModifierInterface
      * @param Closure(TValue $item): bool $callback
      */
     public function __construct(
-        private Closure $callback,
-        private bool $multiple = true,
+        private \Closure $callback,
         private bool $collectNotFiltered = false
     ) {
         $this->memoryBuffer = new MemoryBuffer();
@@ -35,18 +33,15 @@ final class Filter implements ModifierInterface
     /**
      * @param iterable<TKey, TValue> $iterable
      *
-     * @return Generator<TKey, TValue>
+     * @return \Generator<TKey, TValue>
      */
-    public function __invoke(iterable $iterable): Generator
+    public function __invoke(iterable $iterable): \Generator
     {
         $this->memoryBuffer->clearBuffer();
 
         foreach ($iterable as $key => $item) {
             if (($this->callback)($item)) {
                 yield $key => $item;
-                if (false === $this->multiple) {
-                    return;
-                }
             } elseif ($this->collectNotFiltered) {
                 $this->memoryBuffer->buffer($key, $item);
             }

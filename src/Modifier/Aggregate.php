@@ -31,9 +31,9 @@ final class Aggregate implements ModifierInterface
     /**
      * @param iterable<TKey, TValueIterable> $iterable
      *
-     * @return Generator<TKey, TValue>
+     * @return \Generator<TKey, TValue>
      */
-    public function __invoke(iterable $iterable): Generator
+    public function __invoke(iterable $iterable): \Generator
     {
         // Initialize all modifiers Generator
         $modifiersIterable = [];

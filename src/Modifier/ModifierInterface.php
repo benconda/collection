@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace BenConda\Collection\Modifier;
 
-use Generator;
-
 /**
  * @template TKey
+ *
  * @template-covariant TValue
  */
 interface ModifierInterface
@@ -18,7 +17,7 @@ interface ModifierInterface
      *
      * @param iterable<TKeyIterable, TValueIterable> $iterable
      *
-     * @return Generator<TKey, TValue>
+     * @return \Generator<TKey, TValue>
      */
-    public function __invoke(iterable $iterable): Generator;
+    public function __invoke(iterable $iterable): \Generator;
 }

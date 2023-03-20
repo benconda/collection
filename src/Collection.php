@@ -13,7 +13,6 @@ use BenConda\Collection\Modifier\Flip;
 use BenConda\Collection\Modifier\Map;
 use BenConda\Collection\Modifier\MapWith;
 use BenConda\Collection\Modifier\ModifierInterface;
-use BenConda\Collection\Modifier\NullModifier;
 use BenConda\Collection\Modifier\Reindex;
 use Closure;
 
@@ -30,9 +29,9 @@ final class Collection extends CoreCollection
      * @template TIterableValue
      *
      * @param iterable<TIterableKey, TIterableValue> $iterable
-     * @param ModifierInterface<TKey, TValue> $modifier
+     * @param ?ModifierInterface<TKey, TValue>       $modifier
      */
-    private function __construct(iterable $iterable, ModifierInterface $modifier)
+    private function __construct(iterable $iterable, ?ModifierInterface $modifier = null)
     {
         parent::__construct($iterable, $modifier);
     }
@@ -47,19 +46,15 @@ final class Collection extends CoreCollection
      */
     public static function from(iterable $iterable): self
     {
-        /** @var NullModifier<TFromKey, TFromValue> $modifier */
-        $modifier = new NullModifier();
-
-        return new self($iterable, $modifier);
+        return new self($iterable);
     }
 
     /**
-     *
      * @return self<mixed, mixed>
      */
     public static function empty(): self
     {
-        return new self([], new NullModifier());
+        return new self([]);
     }
 
     /**
@@ -86,18 +81,19 @@ final class Collection extends CoreCollection
     /**
      * @param Closure(TValue $item): bool $callback
      */
-    public function filter(Closure $callback, bool $multiple = true): static
+    public function filter(\Closure $callback): static
     {
-        return ($this)(new Filter(callback: $callback, multiple: $multiple));
+        return ($this)(new Filter(callback: $callback));
     }
 
     /**
      * @template TModifierValue
-     * @param Closure(TValue, TKey): TModifierValue $on
+     *
+     * @param \Closure(TValue, TKey): TModifierValue $on
      *
      * @return self<TKey, TModifierValue>
      */
-    public function map(Closure $on): self
+    public function map(\Closure $on): self
     {
         return ($this)(new Map(on: $on));
     }
@@ -119,12 +115,12 @@ final class Collection extends CoreCollection
      * @template TReturnValue
      *
      * @param CoreCollection<TJoinKey, TJoinValue> $collection
-     * @param Closure(TValue, TJoinValue): bool $on
+     * @param \Closure(TValue, TJoinValue): bool   $on
      * @param ?Closure(TValue, ($many is true ? list<TJoinValue> : TJoinValue)):TReturnValue $map
      *
      * @return self<TKey, ($map is null ? ($many is true ? list<TJoinValue> : TJoinValue) : list<TJoinValue>|TJoinValue|TReturnValue)>
      */
-    public function mapWith(CoreCollection $collection, Closure $on, Closure $map = null, bool $many = false): self
+    public function mapWith(CoreCollection $collection, \Closure $on, \Closure $map = null, bool $many = false): self
     {
         return ($this)(new MapWith(
             collection: $collection,
@@ -146,11 +142,11 @@ final class Collection extends CoreCollection
     }
 
     /**
-     * @param Closure(TValue): void $callback
+     * @param \Closure(TValue): void $callback
      *
      * @return self<TKey, TValue>
      */
-    public function each(Closure $callback): self
+    public function each(\Closure $callback): self
     {
         return ($this)(new Each(callback: $callback));
     }

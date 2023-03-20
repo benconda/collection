@@ -5,13 +5,10 @@ declare(strict_types=1);
 namespace BenCondaTest\Collection\Modifier;
 
 use BenConda\Collection\Collection;
-use BenConda\Collection\CoreCollection;
-use BenConda\Collection\Modifier\Map;
-use BenConda\Collection\Modifier\NullModifier;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers Map
+ * @covers \Map
  */
 final class MapTest extends TestCase
 {
