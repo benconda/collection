@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BenConda\Collection;
 
+use BenConda\Collection\BufferedModifier\Cache;
 use BenConda\Collection\BufferedModifier\Reverse;
 use BenConda\Collection\Modifier\Add;
 use BenConda\Collection\Modifier\Aggregate;
@@ -72,16 +73,28 @@ final class Collection extends CoreCollection
 
     /**
      * @param iterable<TKey, TValue> $items
+     *
+     * @return self<TKey, TValue>
      */
-    public function add(iterable $items): static
+    public function add(iterable $items): self
     {
         return ($this)(new Add(items: $items));
     }
 
     /**
-     * @param Closure(TValue $item): bool $callback
+     * @return self<TKey, TValue>
      */
-    public function filter(\Closure $callback): static
+    public function cache(): self
+    {
+        return ($this)(new Cache());
+    }
+
+    /**
+     * @param Closure(TValue $item): bool $callback
+     *
+     * @return self<TKey, TValue>
+     */
+    public function filter(\Closure $callback): self
     {
         return ($this)(new Filter(callback: $callback));
     }

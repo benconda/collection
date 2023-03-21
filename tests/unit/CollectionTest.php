@@ -91,4 +91,22 @@ final class CollectionTest extends TestCase
             ['key' => 4, 'value' => 'The number is 5'],
         ], $debugLog);
     }
+
+    public function testFromGeneratorFail(): void
+    {
+        $generator = static fn (): \Generator => yield from range(0, 3);
+        $col = Collection::from($generator());
+        self::assertSame([0, 1, 2, 3], $col->toArray());
+        $this->expectExceptionMessage('Generator passed to yield from was aborted without proper return and is unable to continue');
+        $col->execute();
+    }
+
+    public function testFromGeneratorSuccessWithCache(): void
+    {
+        $generator = static fn (): \Generator => yield from range(0, 3);
+        $col = Collection::from($generator())
+            ->cache();
+        self::assertSame([0, 1, 2, 3], $col->toArray());
+        self::assertSame([0, 1, 2, 3], $col->toArray());
+    }
 }
