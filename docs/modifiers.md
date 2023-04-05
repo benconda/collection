@@ -53,9 +53,17 @@ This modifier will replace all the keys with a standard array index (starting fr
 # Buffered Modifiers
 
 ## Cache
-This modifier will keep a cache in memory, it's useful if you need to loop multiple time in your collection and you want to avoid previous modifiers to be called each time OR if you pass a Generator as a collection input, you can't loop more than one times, using cache allow you to loop multiple times.
+This modifier will keep a cache in memory, it's useful if you need to loop multiple time in your 
+collection and you want to avoid previous modifiers to be called each time 
+OR if you pass a Generator as a collection input, you can't loop more than one times, using cache allow you to loop multiple times.
 
 ## Reverse
 This modifier will reverse items orders. To do that, it will need to load the provided iterable entirely in memory.
 
 [Example in test](../tests/unit/BufferedModifier/ReverseTest.php)
+
+## Partition
+Partition using the provided closure returned value as partitioning key. 
+Can be useful to put item with same category together.
+
+[Example in test](../tests/unit/BufferedModifier/PartitionTest.php)

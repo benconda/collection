@@ -64,7 +64,7 @@ class CoreCollection implements \IteratorAggregate
     }
 
     /**
-     * @return array<int|TKey, TValue>
+     * @return array<int|string, TValue>
      */
     public function toArray(): array
     {
@@ -72,6 +72,10 @@ class CoreCollection implements \IteratorAggregate
         foreach ($this as $key => $item) {
             if (is_int($key) || is_string($key)) {
                 $newArray[$key] = $item;
+            } elseif ($key instanceof \Stringable) {
+                $newArray[$key->__toString()] = $item;
+            } elseif ($key instanceof \BackedEnum) {
+                $newArray[$key->value] = $item;
             } else {
                 $newArray[] = $item;
             }

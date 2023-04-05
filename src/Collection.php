@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BenConda\Collection;
 
 use BenConda\Collection\BufferedModifier\Cache;
+use BenConda\Collection\BufferedModifier\Partition;
 use BenConda\Collection\BufferedModifier\Reverse;
 use BenConda\Collection\Modifier\Add;
 use BenConda\Collection\Modifier\Aggregate;
@@ -181,6 +182,19 @@ final class Collection extends CoreCollection
     {
         /** @var Reverse<TKey, TValue> $modifier */
         $modifier = new Reverse();
+
+        return ($this)($modifier);
+    }
+
+    /**
+     * @param \Closure(TValue, TKey):(array-key|\Stringable|\BackedEnum) $on
+     *
+     * @return self<array-key, iterable<TKey, TValue>>
+     */
+    public function partition(\Closure $on): self
+    {
+        /** @var Partition<array-key, TKey, TValue> $modifier */
+        $modifier = new Partition($on);
 
         return ($this)($modifier);
     }

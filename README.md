@@ -115,6 +115,7 @@ final class Reindex implements ModifierInterface
 If you need some configuration, simply add a constructor to the class.
 
 ## Using your own collection class
+
 Sometimes you need to create your own, strict typed Collection class.
 
 To do so, you can extend the CoreCollection class, and implement only the needed modifier method.
