@@ -2,7 +2,7 @@
     "name": "benconda/collection",
     "type": "library",
     "license": "MIT",
-    "description": "Just another collection library, powered by generators, using static analysis generics and easily extendable",
+    "description": "Collection library, powered by generators, with generics, easily extendable and immutable. Lazy by design and memory friendly. Accept anything as iterable \uD83D\uDD25 (Generator, array, Iterator, ...)",
     "autoload": {
         "psr-4": {
             "BenConda\\Collection\\": "src/"
