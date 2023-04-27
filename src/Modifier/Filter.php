@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace BenConda\Collection\Modifier;
 
-use BenConda\Collection\MemoryBuffer;
+use BenConda\Collection\Buffer\MemoryBuffer;
 use Closure;
 
 /**
