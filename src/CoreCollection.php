@@ -21,12 +21,12 @@ class CoreCollection implements \IteratorAggregate
     private readonly ?ModifierInterface $modifier;
 
     /**
-     * @param iterable<mixed, mixed>          $iterable
-     * @param ModifierInterface<TKey, TValue> $modifier
+     * @param iterable<mixed, mixed>           $iterable
+     * @param ?ModifierInterface<TKey, TValue> $modifier
      */
     public function __construct(
         private readonly iterable $iterable,
-        ModifierInterface $modifier = null
+        ?ModifierInterface $modifier = null
     ) {
         $this->modifier = $modifier;
     }

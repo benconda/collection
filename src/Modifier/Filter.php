@@ -30,6 +30,14 @@ final class Filter implements ModifierInterface
         $this->memoryBuffer = new MemoryBuffer();
     }
 
+    public static function new(
+        \Closure $callback,
+        bool $collectNotFiltered = false
+    )
+    {
+        return new self($callback, $collectNotFiltered);
+    }
+
     /**
      * @param iterable<TKey, TValue> $iterable
      *

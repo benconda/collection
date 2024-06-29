@@ -8,9 +8,9 @@ use BenConda\Collection\Collection;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \BenConda\Collection\Modifier\MapWith
+ * @covers \BenConda\Collection\Modifier\JoinWith
  */
-final class MapWithTest extends TestCase
+final class JoinWithTest extends TestCase
 {
     /** @var Collection<int, Item> */
     private Collection $itemCollection;
@@ -42,17 +42,41 @@ final class MapWithTest extends TestCase
     public function testMapWithModifier(): void
     {
         $personsWithCartItems = $this->personCollection
-            ->mapWith(
+            ->joinWith(
                 $this->cartCollection,
                 on: fn (Person $person, Cart $cart): bool => $person->id === $cart->personId,
                 map: fn (Person $person, array $cart): PersonWithCartItems => new PersonWithCartItems($person, Collection::from($cart)
-                    ->mapWith($this->itemCollection, on: fn (Cart $cart, Item $item): bool => $cart->itemId === $item->id)->toList()),
+                    ->joinWith($this->itemCollection, on: fn (Cart $cart, Item $item): bool => $cart->itemId === $item->id)->toList()),
                 many: true
             );
 
         foreach ($personsWithCartItems as $item) {
             self::assertInstanceOf(PersonWithCartItems::class, $item);
         }
+    }
+
+    public function testInnerJoin(): void
+    {
+        $this->personCollection
+            ->joinWith(
+                $this->cartCollection,
+                on: fn (Person $person, Cart $cart): bool => $person->id === $cart->personId,
+                map: fn(Person $person, Cart $cart): Person => $person,
+                innerJoin: true
+            )
+            ->each(fn (Person $person) => self::assertNotEquals('Person 3', $person->name))
+            ->toList();
+
+        $this->personCollection
+            ->joinWith(
+                $this->cartCollection,
+                on: fn (Person $person, Cart $cart): bool => $person->id === $cart->personId,
+                map: fn(Person $person, ?Cart $cart): Person => $person,
+                innerJoin: false
+            )
+            ->filter(fn (Person $person): bool => $person->name === 'Person 3')
+            ->each(fn (Person $person) => self::assertEquals('Person 3', $person->name))
+            ->toList();
     }
 }
 

@@ -15,7 +15,7 @@ use BenConda\Collection\CoreCollection;
  *
  * @implements ModifierInterface<TKey, list<TCollectionValue>|TCollectionValue|TReturnValue>
  */
-final class MapWith implements ModifierInterface
+final class JoinWith implements ModifierInterface
 {
     /**
      * @param CoreCollection<TCollectionKey, TCollectionValue>                                 $collection
@@ -26,7 +26,8 @@ final class MapWith implements ModifierInterface
         private CoreCollection $collection,
         private \Closure $on,
         private ?\Closure $map = null,
-        private bool $many = false
+        private bool $many = false,
+        private bool $innerJoin = false,
     ) {
     }
 
@@ -39,6 +40,9 @@ final class MapWith implements ModifierInterface
     {
         foreach ($iterable as $key => $item) {
             $result = $this->joinWith($item, $this->many);
+            if ($this->innerJoin && (null === $result || [] === $result)) {
+                continue;
+            }
             yield $key => null === $this->map ? $result : ($this->map)($item, $result);
         }
     }

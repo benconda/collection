@@ -13,7 +13,7 @@ use BenConda\Collection\Modifier\Each;
 use BenConda\Collection\Modifier\Filter;
 use BenConda\Collection\Modifier\Flip;
 use BenConda\Collection\Modifier\Map;
-use BenConda\Collection\Modifier\MapWith;
+use BenConda\Collection\Modifier\JoinWith;
 use BenConda\Collection\Modifier\ModifierInterface;
 use BenConda\Collection\Modifier\Reindex;
 use Closure;
@@ -134,13 +134,14 @@ final class Collection extends CoreCollection
      *
      * @return self<TKey, ($map is null ? ($many is true ? list<TJoinValue> : TJoinValue) : list<TJoinValue>|TJoinValue|TReturnValue)>
      */
-    public function mapWith(CoreCollection $collection, \Closure $on, \Closure $map = null, bool $many = false): self
+    public function joinWith(CoreCollection $collection, \Closure $on, \Closure $map = null, bool $many = false, bool $innerJoin = false): self
     {
-        return ($this)(new MapWith(
+        return ($this)(new JoinWith(
             collection: $collection,
             on: $on,
             map: $map,
-            many: $many
+            many: $many,
+            innerJoin: $innerJoin
         ));
     }
 
