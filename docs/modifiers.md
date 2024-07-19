@@ -29,21 +29,19 @@ Same as array_flip
 
 [Example in test](../tests/unit/Modifier/FlipTest.php)
 
+## Join
+Just like a SQL join with another collection (or any iterable).
+
+The on attribute is a Closure used to select items that match (must return a boolean value like filter modifier)
+
+The select attribute allow you to provide a closure to alter the value that will be used for the new Collection value
+
+[Example in test](../tests/unit/Modifier/JoinTest.php)
+
 ## Map
 Allow you to change the value with the callback return value.
 
 [Example in test](../tests/unit/Modifier/MapTest.php)
-
-## MapWith
-A powerful modifier, that will map each item, with items from another collection.
-
-The on attribute is a Closure used to select items that match (must return a boolean value like filter modifier)
-
-The map attribute allow you to provide a closure to alter the value that will be used for the new Collection value
-
-Many attribute allow you to specify if each item will map with a single value, or multiple (array).
-
-[Example in test](../tests/unit/Modifier/MapWithTest.php)
 
 ## Reindex
 This modifier will replace all the keys with a standard array index (starting from 0)
