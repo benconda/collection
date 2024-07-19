@@ -3,7 +3,7 @@ Collection library, powered by generators, with generics, easily extendable and 
 **Lazy** by design and memory friendly. Accept anything as iterable 🔥 (Generator, array, Iterator, ...)
 
 # Requirement
-To use this library you need at least php 8.1
+To use this library you need at least php 8.2
 
 # Usage
 
