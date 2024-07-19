@@ -18,9 +18,14 @@ final class Mutable implements ModifierInterface
     private array $modifiers = [];
 
     /**
-     * @param ModifierInterface<TKey, TValue> $modifier
+     * @template TKeyModifier
+     * @template TValueModifier
+     *
+     * @param ModifierInterface<TKeyModifier, TValueModifier> $modifier
+     *
+     * @return self<TKeyModifier, TValueModifier>
      */
-    public function addModifier(ModifierInterface $modifier): static
+    public function addModifier(ModifierInterface $modifier): self
     {
         $this->modifiers[] = $modifier;
 

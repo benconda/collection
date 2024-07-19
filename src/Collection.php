@@ -12,7 +12,7 @@ use BenConda\Collection\Modifier\ModifierInterface;
  *
  * @extends CoreCollection<TKey, TValue>
  */
-final class Collection extends CoreCollection
+class Collection extends CoreCollection
 {
     /** @use ModifiersTrait<TKey, TValue> */
     use ModifiersTrait;

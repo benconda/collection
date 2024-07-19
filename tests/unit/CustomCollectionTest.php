@@ -6,6 +6,7 @@ namespace BenCondaTest\Collection;
 
 use BenConda\Collection\Modifier\Add;
 use BenConda\Collection\Modifier\Filter;
+use BenConda\Collection\MutableCollection;
 use BenConda\Collection\MutableCoreCollection;
 use PHPUnit\Framework\TestCase;
 
@@ -20,6 +21,9 @@ final class CustomCollectionTest extends TestCase
     private array $basedCarList;
     private CarCollection $carCollection;
 
+    /** @var MutableCollection<int, Car> */
+    private MutableCollection $mutableCollection;
+
     protected function setUp(): void
     {
         $this->basedCarList = [
@@ -29,30 +33,39 @@ final class CustomCollectionTest extends TestCase
         ];
 
         $this->carCollection = new CarCollection($this->basedCarList);
+        $this->mutableCollection = new MutableCollection($this->basedCarList);
     }
 
     public function testCustomCollection(): void
     {
         self::assertSame($this->basedCarList, $this->carCollection->toArray());
+        self::assertSame($this->basedCarList, $this->mutableCollection->toArray());
     }
 
     public function testGetFirst(): void
     {
         self::assertSame($this->basedCarList[0], $this->carCollection->first());
+        self::assertSame($this->basedCarList[0], $this->mutableCollection->first());
     }
 
     public function testAddItem(): void
     {
         $this->carCollection->add($newCar = new Car('5393afe4-a62e-4455-9423-c32b6183e563', '308', 'Peugeot'));
+        $this->mutableCollection->add([$newCar]);
         $expectedList = [...$this->basedCarList, $newCar];
         self::assertSame($expectedList, $this->carCollection->toList());
+        self::assertSame($expectedList, $this->mutableCollection->toList());
     }
 
     public function testRemoveItem(): void
     {
-        $this->carCollection->remove($this->basedCarList[1]);
-        unset($this->basedCarList[1]);
-        self::assertSame($this->basedCarList, $this->carCollection->toArray());
+        $baseCarList = $this->basedCarList;
+        $removedItem = $baseCarList[1];
+        $this->carCollection->remove($removedItem);
+        $this->mutableCollection->filter(callback: static fn (Car $carItem) => $carItem !== $removedItem);
+        unset($baseCarList[1]);
+        self::assertSame($baseCarList, $this->carCollection->toArray());
+        self::assertSame($baseCarList, $this->mutableCollection->toArray());
     }
 }
 

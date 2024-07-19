@@ -24,12 +24,13 @@ class MutableCoreCollection extends CoreCollection
     }
 
     /**
-     * @param ModifierInterface<TKey, TValue> ...$modifier
+     * @template TKeyModifier
+     * @template TValueModifier
+     *
+     * @param ModifierInterface<TKeyModifier, TValueModifier> $modifier
      */
-    protected function modify(ModifierInterface ...$modifier): void
+    protected function modify(ModifierInterface $modifier): void
     {
-        foreach ($modifier as $modifierItem) {
-            $this->innerMutable->addModifier($modifierItem);
-        }
+        $this->innerMutable->addModifier($modifier);
     }
 }
