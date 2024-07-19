@@ -31,8 +31,7 @@ final class CollectionTest extends TestCase
         /** @var int[] $array */
         $array = range(1, 10);
 
-        $collection = (Collection::from($array))
-        (
+        $collection = (Collection::from($array))(
             new Filter(
                 callback: fn (int $item) => 0 === $item % 2
             )
@@ -44,13 +43,11 @@ final class CollectionTest extends TestCase
     public function testMultipleModifier(): void
     {
         $array = range(1, 10);
-        $collection = (Collection::from($array))
-        (
+        $collection = (Collection::from($array))(
             new Filter(
                 callback: fn (int $item) => 0 === $item % 2
             ),
-        )
-        (
+        )(
             new Filter(
                 callback: fn (int $item) => $item > 6
             )
@@ -65,18 +62,15 @@ final class CollectionTest extends TestCase
         $debugModifier = new Debug();
         Collection::from(range(1, 10))(
             $debugModifier
-        )
-        (
+        )(
             new Filter(
                 callback: fn (int $item): bool => $item >= 5
             ),
-        )
-        (
+        )(
             new Map(
                 on: fn (int $item): string => "The number is $item"
             )
-        )
-        (
+        )(
             $debugModifier
         )->first();
         $debugLog = $debugModifier->getDebugLog();

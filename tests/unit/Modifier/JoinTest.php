@@ -8,9 +8,9 @@ use BenConda\Collection\Collection;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \BenConda\Collection\Modifier\JoinWith
+ * @covers \BenConda\Collection\Modifier\Join
  */
-final class JoinWithTest extends TestCase
+final class JoinTest extends TestCase
 {
     /** @var Collection<int, Item> */
     private Collection $itemCollection;
@@ -42,41 +42,26 @@ final class JoinWithTest extends TestCase
     public function testMapWithModifier(): void
     {
         $personsWithCartItems = $this->personCollection
-            ->joinWith(
+            ->join(
                 $this->cartCollection,
                 on: fn (Person $person, Cart $cart): bool => $person->id === $cart->personId,
-                map: fn (Person $person, array $cart): PersonWithCartItems => new PersonWithCartItems($person, Collection::from($cart)
-                    ->joinWith($this->itemCollection, on: fn (Cart $cart, Item $item): bool => $cart->itemId === $item->id)->toList()),
-                many: true
+                select: fn (Person $person, Collection $cart): PersonWithCartItems => new PersonWithCartItems(
+                    $person,
+                    $cart->join(
+                        $this->itemCollection,
+                        on: fn (Cart $cart, Item $item): bool => $cart->itemId === $item->id,
+                        select: fn (Cart $cart, Collection $item) => $item->first()
+                    )
+                ),
             );
 
         foreach ($personsWithCartItems as $item) {
             self::assertInstanceOf(PersonWithCartItems::class, $item);
+            self::assertInstanceOf(Collection::class, $item->cartItems);
+            foreach ($item->cartItems as $cartItem) {
+                self::assertInstanceOf(Item::class, $cartItem);
+            }
         }
-    }
-
-    public function testInnerJoin(): void
-    {
-        $this->personCollection
-            ->joinWith(
-                $this->cartCollection,
-                on: fn (Person $person, Cart $cart): bool => $person->id === $cart->personId,
-                map: fn(Person $person, Cart $cart): Person => $person,
-                innerJoin: true
-            )
-            ->each(fn (Person $person) => self::assertNotEquals('Person 3', $person->name))
-            ->toList();
-
-        $this->personCollection
-            ->joinWith(
-                $this->cartCollection,
-                on: fn (Person $person, Cart $cart): bool => $person->id === $cart->personId,
-                map: fn(Person $person, ?Cart $cart): Person => $person,
-                innerJoin: false
-            )
-            ->filter(fn (Person $person): bool => $person->name === 'Person 3')
-            ->each(fn (Person $person) => self::assertEquals('Person 3', $person->name))
-            ->toList();
     }
 }
 
@@ -110,11 +95,11 @@ class Cart
 class PersonWithCartItems
 {
     /**
-     * @param array<Item> $cartItems
+     * @param List<?Item> $cartItems
      */
     public function __construct(
         public readonly Person $person,
-        public readonly array $cartItems
+        public readonly iterable $cartItems
     ) {
     }
 }
